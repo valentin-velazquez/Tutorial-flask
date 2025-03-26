@@ -5,15 +5,30 @@ app = Flask(__name__)
 @app.route("/")
 def hello_world():
     return """
-           <a href= 'boca'>boca</a>
-           <a href= 'riBer'>riBer</a>
+           <a href= '/HAMBURGUESA'>HAMBURGUESA</a>
+           <a href= '/papas_fritas'>papas_fritas</a>
     """
     
 
-@app.route("/boca")
-def boquita():
-    return "<h1>boca el mas grande!</h1>"
+@app.route("/HAMBUERGUESA")
+def COMIDA():
+    return "<h2>amo las hamburgeesas</h2>"
 
-@app.route("/riBer")
-def riBer():
-    return "<h1>riBer equipo chico</h1>"
+@app.route("/HAMBUERGUESA/<string:condimentos>")
+def COMIDA_condimentos(condimentos):
+    return f"<h2>amo las hamburgeesas {condimentos}</h2>"
+
+@app.route("/papas_fritas")
+def acompañamiento():
+    return "<h2>papas fritas</h2>"
+
+@app.route("/dado/<int:caras>")
+def dado(caras):
+    from random import randint
+    numero = randint(1,caras)
+    return "<h2>dado de {caras} caras, salio{numero}!</h2>"
+
+@app.route("/sumar/<int:n1>/<int:n2>")
+def suma(n1,n2):
+    suma = n1+n2
+    return f"<h2>{n1} mas {n2} da {suma}</h2>"
