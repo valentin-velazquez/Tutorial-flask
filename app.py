@@ -20,7 +20,7 @@ def COMIDA_condimentos(condimentos):
 
 @app.route("/papas_fritas")
 def acompañamiento():
-    return "<h2>papas fritas</h2>"
+    return "<h2>amo las papas fritas</h2>"
 
 @app.route("/dado/<int:caras>")
 def dado(caras):
