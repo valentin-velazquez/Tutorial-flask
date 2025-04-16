@@ -1,4 +1,5 @@
 from flask import Flask, url_for
+import sqlite3
 
 app = Flask(__name__)
 
@@ -44,5 +45,29 @@ def suma(n1,n2):
     suma = n1+n2
     return f"<h2>{n1} mas {n2} da {suma}</h2>"
 
+
+db=None
+def abrirConexion():
+    db = sqlite3.connect("instance/datos.sqlite")
+    db.row_factory = sqlite3.Row
+    return db
+
+
+def cerrarConexion():
+    global db
+    if db is not None:
+        db.close()
+        db=None
+
+@app.route("/usuarios")
+def obterGente():
+    global db 
+    conexion = abrirConexion()
+    cursor = conexion.cursor ()
+    cursor.execute('SELECT * FROM usuarios')
+    resultado = cursor.fetchall()#te trae a toda la tabla el fetchall
+    fila = [dict(row) for row in resultado]
+
+    return fila             
 
 
