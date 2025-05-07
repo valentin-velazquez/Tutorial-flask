@@ -14,12 +14,14 @@ def hello_world():
     url_insertar = url_for("insertar", nombre = "valen", email = "valesergiovelazquez@gmail.com")
     url_borrar = url_for("borrar", id = "2")
     url_mostrar = url_for("mostrar", id = "1")
+    url_todos = url_for("todo")
+
 
     
     
     return f"""
     <ul>
-       <li><a href='{url_hamburguesa}'>HAMBUERGUESA</a></li>
+       <li><a href='{url_hamburguesa}'>HAMBURGUESA</a></li>
        <li><a href='{url_papas}'>papas_fritas</a></li>
        <li><a href='{url_dados}'>dados</a></li>
        <li><a href='{url_sumar}'>sumar</a></li>
@@ -27,6 +29,9 @@ def hello_world():
        <li><a href='{url_insertar}'>insertar</a></li>
        <li><a href='{url_borrar}'>borrar</a></li>
        <li><a href='{url_mostrar}'>mostrar</a></li>
+
+
+
        <ul>
 
 """
@@ -184,3 +189,13 @@ def datos_plantilla(id):
         tel = res['telefono']
         dir = res['direccion']
     return render_template("datos2.html", id=id, usuario=usuario, email=email, tel=tel, dir=dir)
+
+
+@app.route("/informacion-cada-usuario")
+def todo():
+   abrirConexion()
+   cursor = db.cursor()
+   cursor.execute("SELECT * FROM usuarios")
+   res = cursor.fetchall()
+   cerrarConexion()
+   return render_template("datos1.html", usuarios=res)
