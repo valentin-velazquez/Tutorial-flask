@@ -1,4 +1,4 @@
-from flask import Flask, url_for
+from flask import Flask, url_for, render_template
 import sqlite3
 
 app = Flask(__name__)
@@ -167,3 +167,16 @@ def update(id):
     return f"borraste el usuario con el id {id}"
 
 
+@app.route("/mostrar-datos-plantilla/<int:id>")
+def datos_plantilla(id):
+    abrirConexion()
+    cursor = db.cursor()
+    cursor.execute("SELECT id, usuario, email FROM usuarios WHERE id = ?",(id,))
+    res = cursor.fetchone()
+    cerrarConexion()
+    usuario = None
+    email = None
+    if res != None:
+        usuario= res['usuario']
+        email=res['email']
+    return render_template("datos2.html", id=id, usuario=usuario, email=email)
