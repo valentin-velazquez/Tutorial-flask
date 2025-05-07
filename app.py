@@ -171,12 +171,16 @@ def update(id):
 def datos_plantilla(id):
     abrirConexion()
     cursor = db.cursor()
-    cursor.execute("SELECT id, usuario, email FROM usuarios WHERE id = ?",(id,))
+    cursor.execute('SELECT * FROM usuarios WHERE id = (?)',(id,))
     res = cursor.fetchone()
     cerrarConexion()
     usuario = None
     email = None
+    tel = None
+    dir = None
     if res != None:
         usuario= res['usuario']
         email=res['email']
-    return render_template("datos2.html", id=id, usuario=usuario, email=email)
+        tel = res['telefono']
+        dir = res['direccion']
+    return render_template("datos2.html", id=id, usuario=usuario, email=email, tel=tel, dir=dir)
